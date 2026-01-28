@@ -4,11 +4,17 @@ A secure, ready-to-use development container for [GitHub Copilot CLI](https://gi
 
 ## ⚡ Quick Start (Pre-built Image)
 
+**One-line install (macOS/Linux):**
 ```bash
-docker run -it --cap-add=NET_ADMIN --cap-add=NET_RAW -v "$(pwd):/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest
+curl -fsSL https://raw.githubusercontent.com/Lukasedv/yolopilot/main/install.sh | bash
 ```
 
-Then inside the container: `copilot`
+**One-line install (Windows PowerShell):**
+```powershell
+iwr -useb https://raw.githubusercontent.com/Lukasedv/yolopilot/main/install.ps1 | iex
+```
+
+Then just run `yolopilot` in any directory!
 
 ## ✨ Features
 
