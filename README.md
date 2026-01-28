@@ -2,6 +2,14 @@
 
 A secure, ready-to-use development container for [GitHub Copilot CLI](https://github.com/github/copilot-cli). This setup provides an isolated environment with firewall rules that restrict network access to only essential services.
 
+## ⚡ Quick Start (Pre-built Image)
+
+```bash
+docker run -it --cap-add=NET_ADMIN --cap-add=NET_RAW -v "$(pwd):/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest
+```
+
+Then inside the container: `copilot`
+
 ## ✨ Features
 
 - **Pre-installed GitHub Copilot CLI** - Ready to use out of the box
@@ -107,20 +115,17 @@ Download and install [Docker Desktop](https://www.docker.com/products/docker-des
 ### Step 2: Clone and Build
 
 ```bash
-# Clone the repository
-git clone https://github.com/Lukasedv/yolopilot.git
-cd yolopilot
+git clone https://github.com/Lukasedv/yolopilot.git && cd yolopilot
+```
 
-# Build the container
-docker build -t yolopilot .devcontainer/
+**Option A: Use pre-built image (recommended):**
+```bash
+docker run -it --cap-add=NET_ADMIN --cap-add=NET_RAW -v "$(pwd):/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest
+```
 
-# Run the container
-docker run -it \
-  --cap-add=NET_ADMIN \
-  --cap-add=NET_RAW \
-  -v "$(pwd):/workspace" \
-  -w /workspace \
-  yolopilot
+**Option B: Build locally:**
+```bash
+docker build -t yolopilot .devcontainer/ && docker run -it --cap-add=NET_ADMIN --cap-add=NET_RAW -v "$(pwd):/workspace" -w /workspace yolopilot
 ```
 
 ### Step 3: Initialize Firewall and Run Copilot
