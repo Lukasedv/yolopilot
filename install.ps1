@@ -16,14 +16,18 @@ if (-not (Test-Path $InstallDir)) {
 # Create the batch file
 $BatchContent = @'
 @echo off
-docker run -it --rm --cap-add=NET_ADMIN --cap-add=NET_RAW -v "%cd%:/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest sh -c "sudo /usr/local/bin/init-firewall.sh && copilot --yolo"
+docker run -it --rm --cap-add=NET_ADMIN --cap-add=NET_RAW -v "%cd%":/workspace -w /workspace ghcr.io/lukasedv/yolopilot:latest sh -c "sudo /usr/local/bin/init-firewall.sh && copilot --yolo"
 '@
 Set-Content -Path "$InstallDir\yolopilot.cmd" -Value $BatchContent
 
 # Create PowerShell function
 $PwshContent = @'
 function yolopilot {
-    docker run -it --rm --cap-add=NET_ADMIN --cap-add=NET_RAW -v "${PWD}:/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest sh -c "sudo /usr/local/bin/init-firewall.sh && copilot --yolo"
+    $currentPath = (Get-Location).Path -replace '\\', '/'
+    if ($currentPath -match '^([A-Za-z]):(.*)$') {
+        $currentPath = '/' + $Matches[1].ToLower() + $Matches[2]
+    }
+    docker run -it --rm --cap-add=NET_ADMIN --cap-add=NET_RAW -v "${currentPath}:/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest sh -c "sudo /usr/local/bin/init-firewall.sh && copilot --yolo"
 }
 '@
 Set-Content -Path "$InstallDir\yolopilot.ps1" -Value $PwshContent
