@@ -16,7 +16,7 @@ if (-not (Test-Path $InstallDir)) {
 # Create the batch file
 $BatchContent = @'
 @echo off
-docker run -it --rm -v "%cd%":/workspace -w /workspace ghcr.io/lukasedv/yolopilot:latest copilot --yolo
+docker run -it --rm -v "%cd%":/workspace -w /workspace ghcr.io/lukasedv/yolopilot:latest sh -c "copilot --yolo; exec zsh"
 '@
 Set-Content -Path "$InstallDir\yolopilot.cmd" -Value $BatchContent
 
@@ -27,7 +27,7 @@ function yolopilot {
     if ($currentPath -match '^([A-Za-z]):(.*)$') {
         $currentPath = '/' + $Matches[1].ToLower() + $Matches[2]
     }
-    docker run -it --rm -v "${currentPath}:/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest copilot --yolo
+    docker run -it --rm -v "${currentPath}:/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest sh -c "copilot --yolo; exec zsh"
 }
 '@
 Set-Content -Path "$InstallDir\yolopilot.ps1" -Value $PwshContent

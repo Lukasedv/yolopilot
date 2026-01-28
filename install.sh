@@ -18,7 +18,7 @@ fi
 # Create the yolopilot script
 cat > "$INSTALL_DIR/yolopilot" << 'EOF'
 #!/bin/bash
-docker run -it --rm -v "$(pwd):/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest copilot --yolo
+docker run -it --rm -v "$(pwd):/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest sh -c "copilot --yolo; exec zsh"
 EOF
 
 chmod +x "$INSTALL_DIR/yolopilot"
