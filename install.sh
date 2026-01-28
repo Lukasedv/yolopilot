@@ -18,7 +18,7 @@ fi
 # Create the yolopilot script
 cat > "$INSTALL_DIR/yolopilot" << 'EOF'
 #!/bin/bash
-docker run -it --rm --cap-add=NET_ADMIN --cap-add=NET_RAW -v "$(pwd):/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest sh -c "sudo /usr/local/bin/init-firewall.sh && copilot --yolo"
+docker run -it --rm -v "$(pwd):/workspace" -w /workspace ghcr.io/lukasedv/yolopilot:latest copilot --yolo
 EOF
 
 chmod +x "$INSTALL_DIR/yolopilot"
